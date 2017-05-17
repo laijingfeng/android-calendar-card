@@ -89,4 +89,32 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
+	<!-- 渠道包打包脚本  ant deploy -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">  
+		<classpath>  
+			<pathelement location="lib/ant-contrib.jar"/>  
+		</classpath>  
+	</taskdef>
+
+	<target name="deploy">
+	   <foreach target="modify_manifest" list="${market_channels}" param="channel" delimiter=",">
+	   </foreach>
+	</target>
+
+	<target name="modify_manifest">
+		<replaceregexp flags="g" byline="false">
+			<!-- 匹配的内容是 android:name="dksdk_channel" android:value="*****" -->
+			<regexp pattern='android:name="dksdk_channel" android:value="(.*)"' />
+			<!-- 匹配之后将其替换为 android:name="dksdk_channel" android:value="渠道名" -->
+			<substitution expression='android:name="dksdk_channel" android:value="${channel}"' />
+			<!-- 正则表达式需要匹配的文件为AndroidManifest.xml -->
+			<fileset dir="" includes="AndroidManifest.xml" />
+		</replaceregexp>
+		<property name="out.release.file" location="${out.absolute.dir}/${ant.project.name}_${channel}.apk" />
+		<!-- 包 -->
+		<antcall target="release" />
+		<!-- 输出渠道包到bin/out目录下 -->
+		<copy tofile="${out.absolute.dir}/out/${ant.project.name}-${channel}.apk" file="bin/${ant.project.name}-release.apk"/>
+	</target>
+
 </project>

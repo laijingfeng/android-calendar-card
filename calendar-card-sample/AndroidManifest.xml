@@ -24,6 +24,9 @@
         </activity>
         <activity android:name="com.wt.calendarcardsample.Sample1" />
         <activity android:name="com.wt.calendarcardsample.Sample2" />
+		
+		<meta-data android:name="dksdk_channel" android:value="baidu" />
+		
     </application>
 
 </manifest>
