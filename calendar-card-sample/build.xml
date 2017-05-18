@@ -114,7 +114,7 @@
 		<!-- 包 -->
 		<antcall target="release" />
 		<!-- 输出渠道包到bin/out目录下 -->
-		<copy tofile="${out.absolute.dir}/out/${ant.project.name}-${channel}.apk" file="bin/${ant.project.name}-release.apk"/>
+		<copy tofile="output/${ant.project.name}-${channel}.apk" file="bin/${ant.project.name}-release.apk"/>
 	</target>
 
 </project>
